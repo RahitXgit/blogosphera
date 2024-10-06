@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Beautiful Blog</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .blog-posts {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .blog-post {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-post a {
+            display: block;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-post-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .blog-post-author {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .blog-post {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>My Beautiful Blog</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Create Blog Post Button -->
+            <div style="text-align: right; margin-bottom: 1.5rem;">
+                <a href="{% url 'create_post' %}" style="display: inline-block; padding: 0.6rem 1.2rem; background-color: var(--primary-color); color: white; border-radius: 4px; text-decoration: none; font-size: 1rem;">
+                    Create Blog Post
+                </a>
+            </div>
+    
+            <h2>Latest Blog Posts</h2>
+            <ul class="blog-posts">
+                {% for post in posts %}
+                    <li class="blog-post">
+                        <a href="{% url 'post_detail' post.id %}">  
+                            <h3 class="blog-post-title">{{ post.title }}</h3>
+                            <p class="blog-post-author">by {{ post.author.username }}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+    
+
+    {% comment %} <footer>
+        <div class="container">
+            <p>&copy; 2023 My Beautiful Blog. All rights reserved.</p>
+        </div>
+    </footer> {% endcomment %}
+</body>
+</html>

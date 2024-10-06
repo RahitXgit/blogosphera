@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .header {
+            background-color: #333; /* Fallback color */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 20px;
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            position: absolute; /* Change to absolute positioning */
+            top: 20px; /* Adjust this value as needed */
+            left: 20px; /* Adjust this value as needed */
+            z-index: 2; /* Ensure it appears above the header background */
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        .author {
+            font-style: italic;
+        }
+        .content {
+            max-width: 800px;
+            margin: -60px auto 40px;
+            padding: 40px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            border-radius: 8px;
+        }
+        .article-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        .article-date {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .article-content {
+            margin-bottom: 40px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <a href="{% url 'blog-home' %}" class="back-button">←</a>
+        <div class="header-content">
+            <h1>{{ post.title|default:"No Title" }}</h1>
+            <p class="author">Author: {{ post.author.username|default:"Unknown" }}</p>
+        </div>
+    </header>
+    <main class="content">
+        <h2 class="article-title">{{ post.title|default:"No Title" }}</h2>
+        <p class="article-date">Published on {% if post.published_date %}{{ post.published_date|date:"F j, Y" }}{% else %}{{ now|date:"F j, Y" }}{% endif %}</p>
+        <div class="article-content">
+            {% if post.content %}
+                {{ post.content|linebreaks }}
+            {% else %}
+                <p>No content available.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate a random Lorem Picsum image URL
+            const imageId = Math.floor(Math.random() * 1000); // Random ID between 0 and 999
+            const imageUrl = `https://picsum.photos/1600/900?random=${imageId}`;
+            
+            // Set the background image of the header
+            const header = document.getElementById('header');
+            if (header) {
+                header.style.backgroundImage = `url('${imageUrl}')`;
+            }
+            
+            // Function to generate a random light color
+            function getRandomLightColor() {
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                
+                // Lighten the color by increasing RGB values
+                const lightR = Math.min(255, r + 100);
+                const lightG = Math.min(255, g + 100);
+                const lightB = Math.min(255, b + 100);
+
+                return `rgb(${lightR}, ${lightG}, ${lightB})`;
+            }
+            
+            // Set the random background color for the body
+            document.body.style.backgroundColor = getRandomLightColor();
+        });
+    </script>
+</body>
+</html>
